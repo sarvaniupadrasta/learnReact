@@ -1,41 +1,35 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 class App extends Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            data:["state1"]
+            data:"value1"
         };
-        this.setStateHandler = this.setStateHandler.bind(this);
+        this.state.updateValueHandler = this.updateValue.bind(this);
     };
-    setStateHandler() {
-        var item = "setState";
-        var myArray = [];
-        myArray = this.state.data.slice();
-        myArray.push(item);
-        console.log(myArray);
-        this.setState({data:myArray});
-    };
-    ChangeDomHandler() {
-        var myDiv = document.getElementById('myDiv');
-        console.log(myDiv);
-        console.log(ReactDOM.findDOMNode(myDiv));
-        //myDiv.style.color = "red";
-        ReactDOM.findDOMNode(myDiv).style.color = "red";
+    updateValue(e) {
+        this.setState({data: e.target.value});
     }
    render(){
       return(
-         <div>
-             <button onClick={this.setStateHandler}>setState</button>
-             <h2>{this.state.data}</h2>
-             <h3>{Math.random()}</h3>
-             <button onClick={this.ChangeDomHandler}>Change Color</button>
-             <div id="myDiv">
-              Color Changed
-             </div>
-         </div>
+         <Component1 dataProp={this.state.data} updateProp={this.state.updateValueHandler}/>
       );
    }
+}
+
+class Component1 extends Component {
+    render() {
+        return (
+            <div>
+                <input type="text" value={this.props.dataProp} onChange={this.props.updateProp} >
+                </input>
+                <h2>
+                    {this.props.dataProp}
+                </h2>
+            </div>
+        );
+
+    }
 }
 export default App;
